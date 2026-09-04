@@ -1,30 +1,349 @@
 import Link from "next/link";
-import { ArrowRight, CheckCircle2, ChevronRight, Clock3, CreditCard, Gamepad2, Headphones, PackageCheck, ShieldCheck, ShoppingCart, Sparkles, Star, Zap } from "lucide-react";
+import Image from "next/image";
+import {
+  ArrowRight,
+  CheckCircle2,
+  ChevronRight,
+  Clock3,
+  CreditCard,
+  Gamepad2,
+  Headphones,
+  PackageCheck,
+  ShieldCheck,
+  ShoppingCart,
+  Sparkles,
+  Star,
+  Zap,
+} from "lucide-react";
 import { games } from "@/data/games";
 import { products } from "@/data/products";
 import { SectionHeading } from "@/components/ui/SectionHeading";
 import { ProductCard } from "./ProductCard";
 
 export function FeaturedGames() {
-  return <section id="games" className="scroll-mt-24 py-20 sm:py-24"><div className="container-page"><SectionHeading eyebrow="Choose your game" title="เลือกเกมที่คุณเล่น" description="รวมไอเทมและแพ็กเติมเกมยอดนิยม พร้อมสินค้า Call of Duty ครบที่สุด" action={<Link href="/games" className="hidden items-center gap-2 text-sm font-bold text-cyan hover:text-white sm:flex">ดูเกมทั้งหมด <ArrowRight size={17} /></Link>} /><div className="grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-6">{games.map((game, index) => <Link href={`/shop?game=${game.slug}`} key={game.slug} className={`group relative min-h-[220px] overflow-hidden rounded-2xl border bg-slate-900 transition duration-300 hover:-translate-y-1.5 hover:border-cyan/60 hover:shadow-glow ${index === 0 ? "border-blue-400/45 sm:col-span-2 lg:col-span-2" : "border-slate-800"}`}><div className={`absolute inset-0 bg-gradient-to-br ${game.gradient}`} /><div className="cyber-noise absolute inset-0 opacity-20" /><div className="absolute inset-0 bg-gradient-to-t from-[#030711] via-transparent to-transparent" /><span className="absolute right-3 top-5 text-5xl font-black tracking-tighter text-white/[.12] transition duration-500 group-hover:scale-110">{game.mark}</span>{index === 0 && <span className="absolute left-4 top-4 rounded-full bg-cyan px-2.5 py-1 text-[9px] font-black tracking-wider text-slate-950">FEATURED</span>}<div className="absolute inset-x-0 bottom-0 p-4"><h3 className="text-sm font-black text-white">{game.name}</h3><p className="mt-1 text-[10px] text-slate-400">{game.productCount} สินค้า</p><span className="mt-3 inline-flex items-center gap-1 text-[10px] font-bold text-cyan">ดูสินค้า <ChevronRight size={13} /></span></div></Link>)}</div></div></section>;
+  return (
+    <section id="games" className="scroll-mt-24 py-20 sm:py-24">
+      <div className="container-page">
+        <SectionHeading
+          eyebrow="Choose your game"
+          title="เลือกเกมที่คุณเล่น"
+          description="รวมไอเทมและแพ็กเติมเกมยอดนิยม พร้อมสินค้า Call of Duty ครบที่สุด"
+          action={
+            <Link
+              href="/games"
+              className="hidden items-center gap-2 text-sm font-bold text-cyan hover:text-white sm:flex"
+            >
+              ดูเกมทั้งหมด <ArrowRight size={17} />
+            </Link>
+          }
+        />
+        <div className="grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-6">
+          {games.map((game, index) => (
+            <Link
+              href={`/shop?game=${game.slug}`}
+              key={game.slug}
+              className={`group relative min-h-[220px] overflow-hidden rounded-2xl border bg-slate-900 transition duration-300 hover:-translate-y-1.5 hover:border-cyan/60 hover:shadow-glow ${index === 0 ? "border-blue-400/45 sm:col-span-2 lg:col-span-2" : "border-slate-800"}`}
+            >
+              <Image
+                src={game.image}
+                alt={`ภาพหมวดเกม ${game.name}`}
+                fill
+                sizes={index === 0 ? "(max-width: 640px) 50vw, (max-width: 1024px) 66vw, 33vw" : "(max-width: 640px) 50vw, (max-width: 1024px) 33vw, 16vw"}
+                className="object-cover transition duration-700 group-hover:scale-110"
+              />
+              <div
+                className={`absolute inset-0 bg-gradient-to-br opacity-25 ${game.gradient}`}
+              />
+              <div className="cyber-noise absolute inset-0 opacity-20" />
+              <div className="absolute inset-0 bg-gradient-to-t from-[#030711] via-[#030711]/15 to-black/10" />
+              <span className="absolute right-3 top-5 text-5xl font-black tracking-tighter text-white/[.16] transition duration-500 group-hover:scale-110">
+                {game.mark}
+              </span>
+              {index === 0 && (
+                <span className="absolute left-4 top-4 rounded-full bg-cyan px-2.5 py-1 text-[9px] font-black tracking-wider text-slate-950">
+                  FEATURED
+                </span>
+              )}
+              <div className="absolute inset-x-0 bottom-0 p-4">
+                <h3 className="text-sm font-black text-white">{game.name}</h3>
+                <p className="mt-1 text-[10px] text-slate-400">
+                  {game.productCount} สินค้า
+                </p>
+                <span className="mt-3 inline-flex items-center gap-1 text-[10px] font-bold text-cyan">
+                  ดูสินค้า <ChevronRight size={13} />
+                </span>
+              </div>
+            </Link>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
 }
 
-function ProductShelf({ eyebrow, title, description, items }: { eyebrow: string; title: string; description: string; items: typeof products }) {
-  return <section className="py-20 sm:py-24"><div className="container-page"><SectionHeading eyebrow={eyebrow} title={title} description={description} action={<Link href="/shop" className="hidden items-center gap-2 text-sm font-bold text-cyan hover:text-white sm:flex">ดูทั้งหมด <ArrowRight size={17} /></Link>} /><div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">{items.slice(0, 4).map((product) => <ProductCard key={product.slug} product={product} />)}</div></div></section>;
+function ProductShelf({
+  eyebrow,
+  title,
+  description,
+  items,
+}: {
+  eyebrow: string;
+  title: string;
+  description: string;
+  items: typeof products;
+}) {
+  return (
+    <section className="py-20 sm:py-24">
+      <div className="container-page">
+        <SectionHeading
+          eyebrow={eyebrow}
+          title={title}
+          description={description}
+          action={
+            <Link
+              href="/shop"
+              className="hidden items-center gap-2 text-sm font-bold text-cyan hover:text-white sm:flex"
+            >
+              ดูทั้งหมด <ArrowRight size={17} />
+            </Link>
+          }
+        />
+        <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+          {items.slice(0, 4).map((product) => (
+            <ProductCard key={product.slug} product={product} />
+          ))}
+        </div>
+      </div>
+    </section>
+  );
 }
 
-export function PopularProducts() { return <ProductShelf eyebrow="Most wanted" title="สินค้ายอดนิยม" description="สินค้าที่เกมเมอร์กำลังเลือกซื้อสูงสุดในสัปดาห์นี้" items={[...products].sort((a, b) => b.sold - a.sold)} />; }
-export function BestSellers() { return <div className="border-y border-slate-800/60 bg-[#07111f]"><ProductShelf eyebrow="Player favorites" title="ขายดีที่สุด" description="คัดจากยอดขายและคะแนนรีวิวจริงของผู้ซื้อ" items={products.filter((product) => product.badge === "ขายดี")} /></div>; }
-export function RecentlyAdded() { return <ProductShelf eyebrow="Fresh drops" title="สินค้ามาใหม่" description="ไอเทมและบันเดิลใหม่ อัปเดตก่อนใครที่ LootBerry Game" items={products.filter((product) => product.isNew)} />; }
+export function PopularProducts() {
+  return (
+    <ProductShelf
+      eyebrow="Most wanted"
+      title="สินค้ายอดนิยม"
+      description="สินค้าที่เกมเมอร์กำลังเลือกซื้อสูงสุดในสัปดาห์นี้"
+      items={[...products].sort((a, b) => b.sold - a.sold)}
+    />
+  );
+}
+export function BestSellers() {
+  return (
+    <div className="border-y border-slate-800/60 bg-[#07111f]">
+      <ProductShelf
+        eyebrow="Player favorites"
+        title="ขายดีที่สุด"
+        description="คัดจากยอดขายและคะแนนรีวิวจริงของผู้ซื้อ"
+        items={products.filter((product) => product.badge === "ขายดี")}
+      />
+    </div>
+  );
+}
+export function RecentlyAdded() {
+  return (
+    <ProductShelf
+      eyebrow="Fresh drops"
+      title="สินค้ามาใหม่"
+      description="ไอเทมและบันเดิลใหม่ อัปเดตก่อนใครที่ LootBerry Game"
+      items={products.filter((product) => product.isNew)}
+    />
+  );
+}
 
 export function Promotion() {
-  return <section className="container-page py-4 sm:py-8"><div className="relative isolate overflow-hidden rounded-3xl border border-violet-400/25 bg-gradient-to-r from-[#0a1740] via-[#15134b] to-[#071a3d] px-7 py-11 shadow-[0_25px_100px_rgba(79,70,229,.18)] sm:px-12 lg:px-16"><div className="grid-texture absolute inset-0 -z-10 opacity-50" /><div className="absolute -right-20 top-1/2 -z-10 h-80 w-80 -translate-y-1/2 rounded-full bg-violet-500/25 blur-[80px]" /><div className="grid items-center gap-8 md:grid-cols-[1.2fr_.8fr]"><div><span className="inline-flex items-center gap-2 rounded-full bg-violet-400/10 px-3 py-1.5 text-[11px] font-bold tracking-widest text-violet-200"><Sparkles size={13} /> FIRST LOOT BONUS</span><h2 className="mt-5 text-3xl font-black leading-tight text-white sm:text-4xl">เริ่มต้น Loot แรก<br /><span className="text-gradient">รับส่วนลด 20%</span></h2><p className="mt-3 text-sm text-blue-100/65">สมัครสมาชิกใหม่ ใช้โค้ด <strong className="text-white">BERRY20</strong> รับส่วนลดทันที</p><Link href="/promotions" className="button-primary mt-7">รับโปรโมชั่น <ArrowRight size={17} /></Link></div><div className="hidden justify-end md:flex"><div className="relative rotate-6 rounded-3xl border border-white/15 bg-white/[.06] p-8 text-center shadow-2xl backdrop-blur"><span className="text-7xl font-black text-white">20<span className="text-cyan">%</span></span><p className="mt-2 text-xs font-bold tracking-[.25em] text-violet-200">WELCOME REWARD</p><div className="absolute -left-12 -top-8 h-24 w-24 rounded-full bg-blue-500/25 blur-2xl" /></div></div></div></div></section>;
+  return (
+    <section className="container-page py-4 sm:py-8">
+      <div className="relative isolate overflow-hidden rounded-3xl border border-violet-400/25 bg-gradient-to-r from-[#0a1740] via-[#15134b] to-[#071a3d] px-7 py-11 shadow-[0_25px_100px_rgba(79,70,229,.18)] sm:px-12 lg:px-16">
+        <div className="grid-texture absolute inset-0 -z-10 opacity-50" />
+        <div className="absolute -right-20 top-1/2 -z-10 h-80 w-80 -translate-y-1/2 rounded-full bg-violet-500/25 blur-[80px]" />
+        <div className="grid items-center gap-8 md:grid-cols-[1.2fr_.8fr]">
+          <div>
+            <span className="inline-flex items-center gap-2 rounded-full bg-violet-400/10 px-3 py-1.5 text-[11px] font-bold tracking-widest text-violet-200">
+              <Sparkles size={13} /> FIRST LOOT BONUS
+            </span>
+            <h2 className="mt-5 text-3xl font-black leading-tight text-white sm:text-4xl">
+              เริ่มต้น Loot แรก
+              <br />
+              <span className="text-gradient">รับส่วนลด 20%</span>
+            </h2>
+            <p className="mt-3 text-sm text-blue-100/65">
+              สมัครสมาชิกใหม่ ใช้โค้ด{" "}
+              <strong className="text-white">BERRY20</strong> รับส่วนลดทันที
+            </p>
+            <Link href="/promotions" className="button-primary mt-7">
+              รับโปรโมชั่น <ArrowRight size={17} />
+            </Link>
+          </div>
+          <div className="hidden justify-end md:flex">
+            <div className="relative rotate-6 rounded-3xl border border-white/15 bg-white/[.06] p-8 text-center shadow-2xl backdrop-blur">
+              <span className="text-7xl font-black text-white">
+                20<span className="text-cyan">%</span>
+              </span>
+              <p className="mt-2 text-xs font-bold tracking-[.25em] text-violet-200">
+                WELCOME REWARD
+              </p>
+              <div className="absolute -left-12 -top-8 h-24 w-24 rounded-full bg-blue-500/25 blur-2xl" />
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  );
 }
 
-const steps = [{ title: "เลือกสินค้า", desc: "ค้นหาเกมและไอเทมที่ต้องการ", icon: Gamepad2 }, { title: "กรอก UID", desc: "ระบุไอดีเกมและเซิร์ฟเวอร์", icon: ShoppingCart }, { title: "ชำระเงิน", desc: "เลือกช่องทางที่สะดวก", icon: CreditCard }, { title: "รับของ", desc: "ระบบส่งสินค้าให้ทันที", icon: PackageCheck }];
-export function HowItWorks() { return <section id="how-it-works" className="scroll-mt-24 border-y border-slate-800/60 bg-[#07111f] py-20"><div className="container-page"><div className="text-center"><p className="section-kicker">Quick & simple</p><h2 className="section-title">ซื้อไอเทมง่ายใน 4 ขั้นตอน</h2></div><div className="relative mt-12 grid gap-4 sm:grid-cols-2 lg:grid-cols-4"><div className="absolute left-[13%] right-[13%] top-8 hidden border-t border-dashed border-blue-400/30 lg:block" />{steps.map(({ title, desc, icon: Icon }, i) => <div key={title} className="relative rounded-2xl border border-slate-800 bg-slate-950/60 p-5 text-center"><div className="relative z-10 mx-auto flex h-16 w-16 items-center justify-center rounded-2xl border border-blue-400/25 bg-[#0b1730] text-cyan shadow-glow"><Icon size={25} /></div><p className="mt-5 text-xs font-black text-blue-400">0{i + 1}</p><h3 className="mt-1 font-bold text-white">{title}</h3><p className="mt-2 text-sm text-slate-500">{desc}</p></div>)}</div></div></section>; }
+const steps = [
+  { title: "เลือกสินค้า", desc: "ค้นหาเกมและไอเทมที่ต้องการ", icon: Gamepad2 },
+  { title: "กรอก UID", desc: "ระบุไอดีเกมและเซิร์ฟเวอร์", icon: ShoppingCart },
+  { title: "ชำระเงิน", desc: "เลือกช่องทางที่สะดวก", icon: CreditCard },
+  { title: "รับของ", desc: "ระบบส่งสินค้าให้ทันที", icon: PackageCheck },
+];
+export function HowItWorks() {
+  return (
+    <section
+      id="how-it-works"
+      className="scroll-mt-24 border-y border-slate-800/60 bg-[#07111f] py-20"
+    >
+      <div className="container-page">
+        <div className="text-center">
+          <p className="section-kicker">Quick & simple</p>
+          <h2 className="section-title">ซื้อไอเทมง่ายใน 4 ขั้นตอน</h2>
+        </div>
+        <div className="relative mt-12 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+          <div className="absolute left-[13%] right-[13%] top-8 hidden border-t border-dashed border-blue-400/30 lg:block" />
+          {steps.map(({ title, desc, icon: Icon }, i) => (
+            <div
+              key={title}
+              className="relative rounded-2xl border border-slate-800 bg-slate-950/60 p-5 text-center"
+            >
+              <div className="relative z-10 mx-auto flex h-16 w-16 items-center justify-center rounded-2xl border border-blue-400/25 bg-[#0b1730] text-cyan shadow-glow">
+                <Icon size={25} />
+              </div>
+              <p className="mt-5 text-xs font-black text-blue-400">0{i + 1}</p>
+              <h3 className="mt-1 font-bold text-white">{title}</h3>
+              <p className="mt-2 text-sm text-slate-500">{desc}</p>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+}
 
-const trust = [{ title: "ส่งไวในไม่กี่นาที", desc: "ระบบจัดส่ง Digital Item อัตโนมัติ 24 ชั่วโมง", icon: Zap }, { title: "ปลอดภัยทุกการจ่าย", desc: "ข้อมูลและธุรกรรมถูกปกป้องด้วยมาตรฐานสากล", icon: ShieldCheck }, { title: "ช่วยเหลือจริง 24/7", desc: "ทีมงานไทยดูแลคุณก่อนและหลังการสั่งซื้อ", icon: Headphones }];
-export function TrustSection() { return <section className="py-20 sm:py-24"><div className="container-page"><SectionHeading eyebrow="Shop with confidence" title="ซื้ออย่างมั่นใจทุกครั้ง" description="LootBerry ดูแลทุกออเดอร์ตั้งแต่ชำระเงินจนได้รับสินค้า" /><div className="grid gap-4 lg:grid-cols-3">{trust.map(({ title, desc, icon: Icon }) => <div key={title} className="group rounded-2xl border border-slate-800 bg-[#091120] p-6 transition hover:border-blue-400/40"><span className="flex h-12 w-12 items-center justify-center rounded-xl bg-blue-500/10 text-cyan group-hover:bg-blue-600 group-hover:text-white"><Icon size={23} /></span><h3 className="mt-5 text-lg font-bold text-white">{title}</h3><p className="mt-2 text-sm leading-6 text-slate-500">{desc}</p></div>)}</div><div className="mt-10 grid grid-cols-2 rounded-2xl border border-slate-800 bg-slate-950/50 py-6 sm:grid-cols-4">{[{ n: "58K+", l: "ออเดอร์สำเร็จ" }, { n: "32K+", l: "เกมเมอร์ไทย" }, { n: "4.9/5", l: "คะแนนรีวิว" }, { n: "99.8%", l: "ส่งสินค้าสำเร็จ" }].map((s) => <div key={s.l} className="py-3 text-center"><p className="text-2xl font-black text-white">{s.n}</p><p className="mt-1 text-xs text-slate-500">{s.l}</p></div>)}</div></div></section>; }
+const trust = [
+  {
+    title: "ส่งไวในไม่กี่นาที",
+    desc: "ระบบจัดส่ง Digital Item อัตโนมัติ 24 ชั่วโมง",
+    icon: Zap,
+  },
+  {
+    title: "ปลอดภัยทุกการจ่าย",
+    desc: "ข้อมูลและธุรกรรมถูกปกป้องด้วยมาตรฐานสากล",
+    icon: ShieldCheck,
+  },
+  {
+    title: "ช่วยเหลือจริง 24/7",
+    desc: "ทีมงานไทยดูแลคุณก่อนและหลังการสั่งซื้อ",
+    icon: Headphones,
+  },
+];
+export function TrustSection() {
+  return (
+    <section className="py-20 sm:py-24">
+      <div className="container-page">
+        <SectionHeading
+          eyebrow="Shop with confidence"
+          title="ซื้ออย่างมั่นใจทุกครั้ง"
+          description="LootBerry ดูแลทุกออเดอร์ตั้งแต่ชำระเงินจนได้รับสินค้า"
+        />
+        <div className="grid gap-4 lg:grid-cols-3">
+          {trust.map(({ title, desc, icon: Icon }) => (
+            <div
+              key={title}
+              className="group rounded-2xl border border-slate-800 bg-[#091120] p-6 transition hover:border-blue-400/40"
+            >
+              <span className="flex h-12 w-12 items-center justify-center rounded-xl bg-blue-500/10 text-cyan group-hover:bg-blue-600 group-hover:text-white">
+                <Icon size={23} />
+              </span>
+              <h3 className="mt-5 text-lg font-bold text-white">{title}</h3>
+              <p className="mt-2 text-sm leading-6 text-slate-500">{desc}</p>
+            </div>
+          ))}
+        </div>
+        <div className="mt-10 grid grid-cols-2 rounded-2xl border border-slate-800 bg-slate-950/50 py-6 sm:grid-cols-4">
+          {[
+            { n: "58K+", l: "ออเดอร์สำเร็จ" },
+            { n: "32K+", l: "เกมเมอร์ไทย" },
+            { n: "4.9/5", l: "คะแนนรีวิว" },
+            { n: "99.8%", l: "ส่งสินค้าสำเร็จ" },
+          ].map((s) => (
+            <div key={s.l} className="py-3 text-center">
+              <p className="text-2xl font-black text-white">{s.n}</p>
+              <p className="mt-1 text-xs text-slate-500">{s.l}</p>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+}
 
-export function Reviews() { const reviews = [{ u: "Pongsak_K", game: "COD Points", t: "เติม CP ไม่ถึงสามนาทีก็เข้าแล้วครับ ระบบเช็กสถานะง่ายมาก" }, { u: "MintLuna", game: "Neon Reaper Skin", t: "ของตรงตามรายละเอียด แอดมินแนะนำเรื่อง Region ดีมาก ประทับใจค่ะ" }, { u: "TonNight", game: "PUBG UC", t: "ซื้อหลายรอบแล้ว ราคาดีและส่งเร็วเหมือนเดิม ไว้ใจ LootBerry เลย" }]; return <section className="pb-20 sm:pb-24"><div className="container-page"><SectionHeading eyebrow="Verified players" title="รีวิวจากเกมเมอร์" description="เสียงจริงจากผู้ซื้อที่ได้รับสินค้าเรียบร้อยแล้ว" /><div className="grid gap-4 lg:grid-cols-3">{reviews.map((r) => <article key={r.u} className="rounded-2xl border border-slate-800 bg-[#091120] p-6"><div className="flex items-center justify-between"><div className="flex items-center gap-3"><span className="flex h-10 w-10 items-center justify-center rounded-full bg-gradient-to-br from-blue-500 to-violet-600 text-xs font-black">{r.u.slice(0, 2).toUpperCase()}</span><div><p className="text-sm font-bold">{r.u}</p><p className="text-[10px] text-cyan">{r.game}</p></div></div><div className="flex text-amber-300">{[1,2,3,4,5].map(i => <Star key={i} size={12} fill="currentColor" />)}</div></div><p className="mt-5 text-sm leading-7 text-slate-300">“{r.t}”</p><p className="mt-4 flex items-center gap-1 text-[10px] font-bold text-emerald-400"><CheckCircle2 size={13} /> ยืนยันการซื้อแล้ว</p></article>)}</div></div></section>; }
+export function Reviews() {
+  const reviews = [
+    {
+      u: "Pongsak_K",
+      game: "COD Points",
+      t: "เติม CP ไม่ถึงสามนาทีก็เข้าแล้วครับ ระบบเช็กสถานะง่ายมาก",
+    },
+    {
+      u: "MintLuna",
+      game: "Neon Reaper Skin",
+      t: "ของตรงตามรายละเอียด แอดมินแนะนำเรื่อง Region ดีมาก ประทับใจค่ะ",
+    },
+    {
+      u: "TonNight",
+      game: "PUBG UC",
+      t: "ซื้อหลายรอบแล้ว ราคาดีและส่งเร็วเหมือนเดิม ไว้ใจ LootBerry เลย",
+    },
+  ];
+  return (
+    <section className="pb-20 sm:pb-24">
+      <div className="container-page">
+        <SectionHeading
+          eyebrow="Verified players"
+          title="รีวิวจากเกมเมอร์"
+          description="เสียงจริงจากผู้ซื้อที่ได้รับสินค้าเรียบร้อยแล้ว"
+        />
+        <div className="grid gap-4 lg:grid-cols-3">
+          {reviews.map((r) => (
+            <article
+              key={r.u}
+              className="rounded-2xl border border-slate-800 bg-[#091120] p-6"
+            >
+              <div className="flex items-center justify-between">
+                <div className="flex items-center gap-3">
+                  <span className="flex h-10 w-10 items-center justify-center rounded-full bg-gradient-to-br from-blue-500 to-violet-600 text-xs font-black">
+                    {r.u.slice(0, 2).toUpperCase()}
+                  </span>
+                  <div>
+                    <p className="text-sm font-bold">{r.u}</p>
+                    <p className="text-[10px] text-cyan">{r.game}</p>
+                  </div>
+                </div>
+                <div className="flex text-amber-300">
+                  {[1, 2, 3, 4, 5].map((i) => (
+                    <Star key={i} size={12} fill="currentColor" />
+                  ))}
+                </div>
+              </div>
+              <p className="mt-5 text-sm leading-7 text-slate-300">“{r.t}”</p>
+              <p className="mt-4 flex items-center gap-1 text-[10px] font-bold text-emerald-400">
+                <CheckCircle2 size={13} /> ยืนยันการซื้อแล้ว
+              </p>
+            </article>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+}

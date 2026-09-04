@@ -6,4 +6,5 @@ export interface Game {
   category: "PC" | "Mobile" | "Wallet";
   gradient: string;
   mark: string;
+  image: string;
 }
