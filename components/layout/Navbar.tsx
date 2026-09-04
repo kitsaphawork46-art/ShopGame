@@ -2,13 +2,12 @@
 
 import { useEffect, useState } from "react";
 import Link from "next/link";
-import { Menu, Search, ShoppingBag, X } from "lucide-react";
+import { Menu, Search, ShoppingBag, UserRound, X } from "lucide-react";
 import { Logo } from "@/components/ui/Logo";
 import { useStore } from "@/components/ui/StoreProvider";
 
 const links = [
-  ["หน้าแรก", "#top"], ["ร้านค้า", "#products"], ["เกมทั้งหมด", "#games"],
-  ["วิธีการสั่งซื้อ", "#how-it-works"], ["รีวิว", "#reviews"], ["ติดต่อเรา", "#footer"],
+  ["หน้าแรก", "/"], ["เกมทั้งหมด", "/games"], ["ร้านค้า", "/shop"], ["โปรโมชั่น", "/promotions"],
 ];
 
 export function Navbar() {
@@ -27,7 +26,7 @@ export function Navbar() {
     <header className={`fixed inset-x-0 top-0 z-50 border-b transition-all ${scrolled ? "border-slate-800/90 bg-ink/90 shadow-xl backdrop-blur-xl" : "border-transparent bg-ink/45 backdrop-blur-sm"}`}>
       <nav className="container-page flex h-[74px] items-center justify-between gap-6" aria-label="เมนูหลัก">
         <Logo />
-        <div className="hidden items-center gap-6 lg:flex">
+        <div className="hidden items-center gap-8 lg:flex">
           {links.map(([label, href], index) => (
             <Link key={label} href={href} className={`focus-ring rounded-md text-sm font-semibold transition hover:text-white ${index === 0 ? "text-white" : "text-slate-400"}`}>{label}</Link>
           ))}
@@ -39,7 +38,7 @@ export function Navbar() {
             {cartCount > 0 && <span className="absolute right-0 top-0 flex h-[18px] min-w-[18px] items-center justify-center rounded-full bg-brand px-1 text-[10px] font-extrabold text-white">{cartCount}</span>}
           </button>
           <Link href="/login" className="focus-ring hidden rounded-lg px-3 py-2 text-sm font-semibold text-slate-300 transition hover:text-white sm:block">เข้าสู่ระบบ</Link>
-          <Link href="/register" className="focus-ring hidden rounded-xl bg-brand px-4 py-2.5 text-sm font-bold text-white shadow-[0_8px_24px_rgba(37,99,235,.25)] transition hover:bg-blue-500 md:block">สมัครสมาชิก</Link>
+          <Link href="/dashboard" className="focus-ring hidden h-10 w-10 items-center justify-center rounded-xl bg-blue-600 text-white shadow-[0_8px_24px_rgba(37,99,235,.25)] transition hover:bg-blue-500 md:flex" aria-label="โปรไฟล์"><UserRound size={18} /></Link>
           <button onClick={() => setMobileOpen((open) => !open)} className="focus-ring ml-1 rounded-xl border border-slate-800 p-2.5 text-slate-200 lg:hidden" aria-label="เปิดเมนู" aria-expanded={mobileOpen}>{mobileOpen ? <X size={20} /> : <Menu size={20} />}</button>
         </div>
       </nav>

@@ -1,0 +1,13 @@
+"use client";
+
+import Link from "next/link";
+import { Bell, Boxes, ChevronLeft, ClipboardList, Heart, LayoutDashboard, LogOut, Settings, ShoppingBag, UserRound, UsersRound, WalletCards } from "lucide-react";
+import { Logo } from "@/components/ui/Logo";
+
+const userLinks = [{ l: "ภาพรวม", h: "/dashboard", i: LayoutDashboard }, { l: "คำสั่งซื้อ", h: "#orders", i: ClipboardList }, { l: "รายการโปรด", h: "#favorites", i: Heart }, { l: "กระเป๋าเงิน", h: "#wallet", i: WalletCards }, { l: "การตั้งค่า", h: "#settings", i: Settings }];
+const adminLinks = [{ l: "ภาพรวม", h: "/admin", i: LayoutDashboard }, { l: "จัดการสินค้า", h: "#products", i: Boxes }, { l: "คำสั่งซื้อ", h: "#orders", i: ShoppingBag }, { l: "ผู้ใช้งาน", h: "#users", i: UsersRound }, { l: "การตั้งค่า", h: "#settings", i: Settings }];
+
+export function DashboardShell({ admin = false, children }: { admin?: boolean; children: React.ReactNode }) {
+  const links = admin ? adminLinks : userLinks;
+  return <div className="min-h-screen bg-[#050505] lg:grid lg:grid-cols-[250px_1fr]"><aside className="hidden min-h-screen border-r border-slate-800 bg-[#07111f] p-5 lg:block"><Logo /><p className="mt-8 px-3 text-[10px] font-bold uppercase tracking-[.2em] text-slate-600">{admin ? "Admin workspace" : "My account"}</p><nav className="mt-3 space-y-1">{links.map(({ l, h, i: Icon }, index) => <Link key={l} href={h} className={`flex items-center gap-3 rounded-xl px-3 py-3 text-sm font-semibold ${index === 0 ? "bg-blue-500/15 text-cyan" : "text-slate-500 hover:bg-slate-800 hover:text-white"}`}><Icon size={18} />{l}</Link>)}</nav><Link href="/login" className="mt-10 flex items-center gap-3 rounded-xl px-3 py-3 text-sm font-semibold text-rose-400 hover:bg-rose-500/10"><LogOut size={18} />ออกจากระบบ</Link></aside><main><header className="flex h-20 items-center justify-between border-b border-slate-800 bg-[#07111f]/80 px-5 backdrop-blur sm:px-8"><div className="flex items-center gap-3"><Link href="/" className="rounded-lg p-2 text-slate-400 hover:text-white"><ChevronLeft size={20} /></Link><div><p className="text-xs text-slate-500">{admin ? "ADMIN CONSOLE" : "LOOTBERRY ACCOUNT"}</p><p className="text-sm font-bold">{admin ? "ผู้ดูแลระบบ" : "สวัสดี, BerryPlayer"}</p></div></div><div className="flex items-center gap-2"><button className="relative rounded-xl border border-slate-800 p-2.5 text-slate-400"><Bell size={18} /><span className="absolute right-2 top-2 h-1.5 w-1.5 rounded-full bg-cyan" /></button><span className="flex h-10 w-10 items-center justify-center rounded-xl bg-gradient-to-br from-blue-500 to-violet-600"><UserRound size={18} /></span></div></header><div className="p-5 sm:p-8">{children}</div></main></div>;
+}

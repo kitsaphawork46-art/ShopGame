@@ -4,7 +4,7 @@
 
 :root {
   color-scheme: dark;
-  --background: #050a14;
+  --background: #050505;
   --foreground: #f8fafc;
 }
 
@@ -17,7 +17,7 @@ body {
   color: var(--foreground);
   background:
     radial-gradient(circle at 78% 0%, rgba(37, 99, 235, .09), transparent 28rem),
-    #050a14;
+    #050505;
   font-family: Inter, "Noto Sans Thai", "Leelawadee UI", system-ui, sans-serif;
   -webkit-font-smoothing: antialiased;
 }
@@ -29,13 +29,13 @@ body {
 ::-webkit-scrollbar-thumb { background: #1e3a5f; border-radius: 999px; }
 
 @layer components {
-  .container-page { @apply mx-auto w-full max-w-[1240px] px-5 sm:px-7 lg:px-8; }
+  .container-page { @apply mx-auto w-full max-w-[1280px] px-5 sm:px-7 lg:px-8; }
   .glass-card { @apply border border-slate-800/90 bg-slate-950/55 backdrop-blur-md; }
   .section-kicker { @apply text-xs font-bold uppercase tracking-[0.2em] text-cyan; }
   .section-title { @apply mt-3 text-3xl font-bold tracking-tight text-white sm:text-4xl; }
   .text-muted { @apply text-slate-400; }
   .focus-ring { @apply focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-cyan focus-visible:ring-offset-2 focus-visible:ring-offset-ink; }
-  .button-primary { @apply focus-ring inline-flex min-h-11 items-center justify-center gap-2 rounded-xl bg-brand px-5 py-3 text-sm font-bold text-white shadow-[0_10px_30px_rgba(37,99,235,.28)] transition hover:-translate-y-0.5 hover:bg-blue-500; }
+  .button-primary { @apply focus-ring inline-flex min-h-11 items-center justify-center gap-2 rounded-xl bg-gradient-to-r from-blue-600 to-blue-500 px-5 py-3 text-sm font-bold text-white shadow-[0_10px_35px_rgba(37,99,235,.32)] transition hover:-translate-y-0.5 hover:from-blue-500 hover:to-cyan; }
   .button-secondary { @apply focus-ring inline-flex min-h-11 items-center justify-center gap-2 rounded-xl border border-slate-700 bg-slate-900/70 px-5 py-3 text-sm font-bold text-white transition hover:border-cyan/50 hover:bg-slate-800; }
 }
 
@@ -44,6 +44,14 @@ body {
   background-size: 44px 44px;
   mask-image: linear-gradient(to bottom, transparent, black 20%, black 70%, transparent);
 }
+
+.cyber-noise {
+  background-image: radial-gradient(rgba(96,165,250,.24) .6px, transparent .7px);
+  background-size: 22px 22px;
+}
+
+.page-top { @apply border-b border-slate-800/70 bg-[#07111f] pb-12 pt-32; }
+.field { @apply focus-ring w-full rounded-xl border border-slate-700 bg-slate-950/80 px-4 py-3 text-sm text-white placeholder:text-slate-600 focus:border-blue-500; }
 
 .text-gradient {
   background: linear-gradient(100deg, #60a5fa 0%, #38bdf8 55%, #a5f3fc 100%);

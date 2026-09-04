@@ -13,6 +13,7 @@ interface StoreState {
   addToCart: (product: Product) => void;
   removeFromCart: (slug: string) => void;
   updateQuantity: (slug: string, quantity: number) => void;
+  clearCart: () => void;
   setCartOpen: (open: boolean) => void;
   setSearchOpen: (open: boolean) => void;
   toggleWishlist: (slug: string) => void;
@@ -26,14 +27,23 @@ export function StoreProvider({ children }: { children: React.ReactNode }) {
   const [cartOpen, setCartOpen] = useState(false);
   const [searchOpen, setSearchOpen] = useState(false);
   const [toast, setToast] = useState("");
+  const [hydrated, setHydrated] = useState(false);
 
   useEffect(() => {
+    const savedCart = window.localStorage.getItem("lootberry-cart");
+    const savedWishlist = window.localStorage.getItem("lootberry-wishlist");
+    if (savedCart) setCart(JSON.parse(savedCart));
+    if (savedWishlist) setWishlist(JSON.parse(savedWishlist));
+    setHydrated(true);
     const close = (event: KeyboardEvent) => {
       if (event.key === "Escape") { setCartOpen(false); setSearchOpen(false); }
     };
     window.addEventListener("keydown", close);
     return () => window.removeEventListener("keydown", close);
   }, []);
+
+  useEffect(() => { if (hydrated) window.localStorage.setItem("lootberry-cart", JSON.stringify(cart)); }, [cart, hydrated]);
+  useEffect(() => { if (hydrated) window.localStorage.setItem("lootberry-wishlist", JSON.stringify(wishlist)); }, [wishlist, hydrated]);
 
   const addToCart = useCallback((product: Product) => {
     setCart((current) => {
@@ -49,6 +59,7 @@ export function StoreProvider({ children }: { children: React.ReactNode }) {
     addToCart,
     removeFromCart: (slug: string) => setCart((current) => current.filter((line) => line.product.slug !== slug)),
     updateQuantity: (slug: string, quantity: number) => setCart((current) => current.map((line) => line.product.slug === slug ? { ...line, quantity: Math.max(1, quantity) } : line)),
+    clearCart: () => setCart([]),
     setCartOpen, setSearchOpen,
     toggleWishlist: (slug: string) => setWishlist((current) => current.includes(slug) ? current.filter((item) => item !== slug) : [...current, slug]),
   }), [cart, cartOpen, searchOpen, wishlist, addToCart]);
