@@ -1,6 +1,6 @@
 import type { Product } from "@/types/product";
 
-export const products: Product[] = [
+const productSeed: Omit<Product, "image">[] = [
   { slug: "cod-points-1100", game: "CALL OF DUTY", gameSlug: "call-of-duty", name: "Call of Duty Points 1,100 CP", description: "เติม COD Points เข้าบัญชีรวดเร็ว ใช้ซื้อ Battle Pass, Bundle และไอเทมในร้านค้าได้ทันที", type: "Points", price: 329, originalPrice: 379, rating: 4.9, reviews: 286, sold: 2840, stock: 99, badge: "ขายดี", accent: "from-blue-400/35 via-blue-950/50 to-slate-950", mark: "CP", packages: [{ label: "500 CP", price: 159 }, { label: "1,100 CP", price: 329 }, { label: "2,400 CP", price: 679 }], regions: ["Global", "Asia", "Thailand"] },
   { slug: "cod-neon-reaper-skin", game: "CALL OF DUTY", gameSlug: "call-of-duty", name: "COD Neon Reaper Weapon Skin", description: "สกินอาวุธดีไซน์ไซเบอร์ระดับ Legendary พร้อมเอฟเฟกต์นีออนและ Kill Effect สำหรับไอดีที่รองรับ", type: "Skin", price: 890, originalPrice: 1090, rating: 4.9, reviews: 164, sold: 928, stock: 12, badge: "ฮอต", accent: "from-cyan-400/35 via-violet-950/50 to-slate-950", mark: "NR", packages: [{ label: "Standard Skin", price: 890 }, { label: "Skin + Upgrade", price: 1290 }], regions: ["Global", "Garena"] },
   { slug: "cod-battle-pass", game: "CALL OF DUTY", gameSlug: "call-of-duty", name: "COD Battle Pass Premium", description: "ปลดล็อก Battle Pass Premium ประจำซีซัน รับสกิน โอเปอเรเตอร์ และของรางวัลพิเศษครบทุกระดับ", type: "Battle Pass", price: 259, rating: 4.8, reviews: 198, sold: 1620, stock: 45, badge: "ขายดี", accent: "from-violet-400/35 via-blue-950/50 to-slate-950", mark: "BP", packages: [{ label: "Premium Pass", price: 259 }, { label: "Premium + 12 Tier", price: 459 }], regions: ["Global", "Asia"] },
@@ -14,5 +14,10 @@ export const products: Product[] = [
   { slug: "cod-vault-edition", game: "CALL OF DUTY", gameSlug: "call-of-duty", name: "COD Vault Edition Upgrade", description: "อัปเกรดเป็น Vault Edition เพื่อรับ Operator Pack, Mastercraft และ Battle Pass", type: "Bundle", price: 1190, rating: 5, reviews: 28, sold: 143, stock: 7, badge: "ใหม่", isNew: true, accent: "from-blue-300/30 via-violet-950/60 to-slate-950", mark: "VE", packages: [{ label: "Vault Upgrade", price: 1190 }], regions: ["Global", "Asia"] },
   { slug: "pubg-royale-pass", game: "PUBG", gameSlug: "pubg", name: "PUBG Royale Pass Elite", description: "เปิด Royale Pass Elite พร้อมภารกิจและรางวัลพิเศษประจำซีซัน", type: "Battle Pass", price: 319, rating: 4.7, reviews: 54, sold: 387, stock: 32, badge: "ใหม่", isNew: true, accent: "from-yellow-300/30 via-indigo-950/55 to-slate-950", mark: "RP", packages: [{ label: "Elite Pass", price: 319 }, { label: "Elite Plus", price: 599 }], regions: ["Thailand", "Asia"] },
 ];
+
+export const products: Product[] = productSeed.map((product) => ({
+  ...product,
+  image: `/images/products/${product.slug}.png`,
+}));
 
 export const getProduct = (slug: string) => products.find((product) => product.slug === slug);

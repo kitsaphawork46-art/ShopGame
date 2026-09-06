@@ -3,6 +3,7 @@ export type ProductType = "Points" | "Skin" | "Battle Pass" | "Top Up" | "Bundle
 
 export interface Product {
   slug: string;
+  image: string;
   game: string;
   gameSlug: string;
   name: string;
